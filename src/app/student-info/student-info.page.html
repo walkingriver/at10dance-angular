@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Student {{student?.firstName}} {{student?.lastName}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <img src="/images">
+  <ion-item>
+    <ion-label position="stacked">First Name</ion-label>
+    <ion-input [value]="student.firstName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">First Name</ion-label>
+    <ion-input [value]="student.lastName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Birth Date</ion-label>
+    <ion-input *ngIf="!isMobile" type="date" [value]="student.birthDate"></ion-input>
+    <ion-datetime *ngIf="isMobile" displayFormat="MM/DD/YYYY" min="1900-01-01" max="2012-12-31" [value]="student.birthDate"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Parent's Name</ion-label>
+    <ion-input [value]="student.parentName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Parent's Email</ion-label>
+    <ion-input type="email" [value]="student.parentEmail"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="stacked">Parent's Phone</ion-label>
+    <ion-input type="tel" [value]="student.parentPhone"></ion-input>
+  </ion-item>
+</ion-content>

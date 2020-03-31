@@ -1,0 +1,14 @@
+{
+  "/images": {
+    "target": "https://thispersondoesnotexist.com/",
+    "pathRewrite": {
+      "^/images": ""
+    },
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true,
+    "headers": {
+      "Connection": "keep-alive"
+    }
+  }
+}
