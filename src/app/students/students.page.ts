@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from '../student';
-import { of } from 'rxjs';
 import { Presence } from '../presence.enum';
-import { ActionSheetController } from '@ionic/angular';
-import { Route } from '@angular/compiler/src/core';
+import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 
@@ -17,38 +15,39 @@ export class StudentsPage implements OnInit {
   present = Presence.Present;
   absent = Presence.Unknown;
 
-  constructor(private actionSheetController: ActionSheetController, private router: Router) { }
+  constructor(
+    private actionSheetController: ActionSheetController,
+    private alertController: AlertController,
+    private toastController: ToastController) { }
 
   ngOnInit() {
+  }
+
+  studentUrl(student: Student) {
+    return `/student/${student.id}`;
   }
 
   async presentActionSheet(student: Student) {
     const actionSheet = await this.actionSheetController.create({
       header: `${student.firstName} ${student.lastName}`,
       buttons: [{
-        text: 'Delete',
-        role: 'destructive',
-        icon: 'trash',
-        handler: () => {
-          this.deleteStudent(student);
-        }
-      }, {
         text: 'Mark Present',
-        icon: 'eye-outline',
-        handler: async () => {
-          await this.markPresent(student);
+        icon: 'eye',
+        handler: () => {
+          this.markPresent(student);
         }
       }, {
         text: 'Mark Absent',
         icon: 'eye-off-outline',
-        handler: async () => {
-          await this.markAbsent(student);
+        handler: () => {
+          this.markAbsent(student);
         }
       }, {
-        text: 'Details',
-        icon: 'document-text-outline',
+        text: 'Delete',
+        icon: 'trash',
+        role: 'destructive',
         handler: () => {
-          this.studentDetails(student);
+          this.presentDeleteAlert(student);
         }
       }, {
         text: 'Cancel',
@@ -59,6 +58,7 @@ export class StudentsPage implements OnInit {
         }
       }]
     });
+
     await actionSheet.present();
   }
 
@@ -70,14 +70,38 @@ export class StudentsPage implements OnInit {
     student.status = this.present;
   }
 
-  async studentDetails(student: Student) {
-    this.router.navigateByUrl(`/student-info/${student.id}`, {
-      state: { student }
-    })
+  async presentDeleteAlert(student: Student) {
+    const alert = await this.alertController.create(
+      {
+        header: 'Delete this student?',
+        subHeader: `${student.firstName} ${student.lastName}`,
+        message: 'This operation cannot be undone.',
+        buttons: [
+          {
+            text: 'Delete',
+            handler: () => this.deleteStudent(student)
+          },
+          {
+            text: 'Never mind',
+            role: 'cancel'
+          }
+        ]
+      }
+    );
+
+    await alert.present();
   }
 
   async deleteStudent(student: Student) {
     this.students = this.students.filter(x => x.id !== student.id);
+    const alert = await this.toastController.create(
+      {
+        message: `${student.firstName} ${student.lastName} has been deleted.`,
+        position: 'top',
+        duration: 3000
+      });
+
+    await alert.present();
   }
 
 }
