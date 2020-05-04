@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Students</ion-title>
+    <ion-title>Class Roster</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,8 +13,8 @@
       <ion-item>
         <ion-icon slot="start" name="person-outline"></ion-icon>
         <ion-label>{{student.lastName}}, {{student.firstName}}</ion-label>
-        <ion-icon *ngIf="student.status===present" slot="end" name="eye"></ion-icon>
-        <ion-icon *ngIf="student.status===absent" slot="end" name="eye-off-outline"></ion-icon>
+        <ion-icon *ngIf="student.status==='present'" slot="end" name="eye"></ion-icon>
+        <ion-icon *ngIf="student.status==='absent'" slot="end" name="eye-off-outline"></ion-icon>
         <ion-buttons slot="end">
           <ion-button (click)="presentActionSheet(student)">
             <ion-icon slot="icon-only" name="ellipsis-horizontal-outline"></ion-icon>

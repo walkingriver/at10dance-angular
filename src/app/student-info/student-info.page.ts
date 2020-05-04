@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Student } from '../student';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { mockStudents } from '../mock-students';
 import { Subscription } from 'rxjs';
+import { StudentsService, Student } from '../students.service';
 
 @Component({
   selector: 'app-student-info',
@@ -11,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./student-info.page.scss'],
 })
 export class StudentInfoPage implements OnInit, OnDestroy {
-  students = [...mockStudents];
+  students = [];
   student: Student = { firstName: '', lastName: '', id: '' };
   isMobile = false;
   sub: Subscription;
@@ -19,7 +18,9 @@ export class StudentInfoPage implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private platform: Platform,
-    private router: Router) {
+    private router: Router,
+    private studentService: StudentsService) {
+      this.students = studentService.getAll();
   }
 
   async ngOnInit() {
@@ -31,7 +32,7 @@ export class StudentInfoPage implements OnInit, OnDestroy {
       this.student = this.students.find(x => x.id === id);
 
       if (!this.student) {
-        this.router.navigateByUrl('/students');
+        this.router.navigateByUrl('/roster');
       }
     });
   }

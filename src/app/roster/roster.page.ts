@@ -1,28 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Student } from '../student';
-import { Presence } from '../presence.enum';
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
-import { mockStudents } from '../mock-students';
-
+import { Student, StudentsService } from '../students.service';
 
 @Component({
-  selector: 'app-students',
-  templateUrl: './students.page.html',
-  styleUrls: ['./students.page.scss'],
+  selector: 'app-roster',
+  templateUrl: './roster.page.html',
+  styleUrls: ['./roster.page.scss'],
 })
-export class StudentsPage implements OnInit {
-  students = [...mockStudents];
-  present = Presence.Present;
-  absent = Presence.Unknown;
+export class RosterPage implements OnInit {
+  students = [];
 
   constructor(
     private actionSheetController: ActionSheetController,
     private alertController: AlertController,
+    private studentService: StudentsService,
     private toastController: ToastController) { }
 
   ngOnInit() {
+    this.students = this.studentService.getAll();
   }
-
+  
   studentUrl(student: Student) {
     return `/student/${student.id}`;
   }
@@ -63,11 +60,11 @@ export class StudentsPage implements OnInit {
   }
 
   async markAbsent(student: Student) {
-    student.status = this.absent;
+    student.status = 'absent';
   }
 
   async markPresent(student: Student) {
-    student.status = this.present;
+    student.status = 'present';
   }
 
   async presentDeleteAlert(student: Student) {
