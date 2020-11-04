@@ -29,7 +29,7 @@
           </ion-button>
         </ion-buttons>
 
-        
+
       </ion-item>
       <ion-item-options side="end">
         <ion-item-option color="danger" (click)="deleteStudent(student)">Delete</ion-item-option>
@@ -37,3 +37,5 @@
     </ion-item-sliding>
   </ion-list>
 </ion-content>
+
+<app-loading [visible]="isLoading" label="Loading Students"></app-loading>

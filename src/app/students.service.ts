@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 export interface Student {
   id: string;
@@ -32,9 +34,12 @@ export class StudentsService {
 
   constructor() { }
 
+  /**
+   * Models a service call with a brief delay,
+   * then returns a mock array of students.
+   */
   getAll() {
-    return [...mockStudents];
+    const mockStudents$ = of([...mockStudents]);
+    return mockStudents$.pipe(delay(2000)); // 2s
   }
 }
-
-

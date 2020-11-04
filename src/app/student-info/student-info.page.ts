@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { StudentsService, Student } from '../students.service';
 
 @Component({
@@ -14,13 +15,15 @@ export class StudentInfoPage implements OnInit, OnDestroy {
   student: Student = { firstName: '', lastName: '', id: '' };
   isMobile = false;
   sub: Subscription;
+  isLoading: boolean;
+  students$: any;
+  studentSub: any;
 
   constructor(
     private route: ActivatedRoute,
     private platform: Platform,
     private router: Router,
     private studentService: StudentsService) {
-      this.students = studentService.getAll();
   }
 
   async ngOnInit() {
@@ -35,10 +38,20 @@ export class StudentInfoPage implements OnInit, OnDestroy {
         this.router.navigateByUrl('/roster');
       }
     });
+
+    this.isLoading = true;
+    this.students$ = this.studentService
+      .getAll()
+      .pipe(
+        finalize(() => this.isLoading = false));
+
+    this.studentSub = this.students$
+      .subscribe(list => this.students = list);
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.sub?.unsubscribe();
+    this.studentSub?.unsubscribe();
   }
 
 }
