@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 export interface Student {
   id: string;
@@ -35,6 +36,8 @@ export class StudentsService {
   getAll() {
     return [...mockStudents];
   }
+
+  getStudent(id: string): Observable<Student> {
+    return of(mockStudents.find(student => student.id === id));
+  }
 }
-
-

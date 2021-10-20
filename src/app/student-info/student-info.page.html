@@ -1,37 +1,75 @@
-<ion-header>
+<ng-container *ngIf="studentVm$ | async as student">
+  <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/roster"></ion-back-button>
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{student?.firstName}} {{student?.lastName}}</ion-title>
+    <ion-title>{{student.firstName}} {{student.lastName}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onSubmit()"
+       [disabled]="!studentForm.valid" >
+        <ion-icon slot="icon-only"
+          name="save"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-item>
-    <ion-label position="stacked">First Name</ion-label>
-    <ion-input [value]="student.firstName"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">First Name</ion-label>
-    <ion-input [value]="student.lastName"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Birth Date</ion-label>
-    <ion-input *ngIf="!isMobile" type="date" [value]="student.birthDate"></ion-input>
-    <ion-datetime *ngIf="isMobile" displayFormat="MM/DD/YYYY" min="1900-01-01" max="2012-12-31" [value]="student.birthDate"></ion-datetime>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Parent's Name</ion-label>
-    <ion-input [value]="student.parentName"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Parent's Email</ion-label>
-    <ion-input type="email" [value]="student.parentEmail"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label position="stacked">Parent's Phone</ion-label>
-    <ion-input type="tel" [value]="student.parentPhone"></ion-input>
-  </ion-item>
-</ion-content>
+    <form (ngSubmit)="onSubmit()"
+      #studentForm="ngForm">
+      <ion-item>
+        <ion-label position="stacked">First Name</ion-label>
+        <ion-input name="firstName"
+          required
+          #firstName="ngModel"
+          [(ngModel)]="student.firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Last Name</ion-label>
+        <ion-input name="lastName"
+          required
+          [(ngModel)]="student.lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Birth Date</ion-label>
+        <ion-datetime presentation="date"
+          name="birthDate"
+          required
+          displayFormat="MM/DD/YYYY"
+          min="1900-01-01"
+          max="2012-12-31"
+          [(ngModel)]="student.birthDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Parent's Name</ion-label>
+        <ion-input name="parentName"
+          required
+          [(ngModel)]="student.parentName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Parent's Email</ion-label>
+        <ion-input name="email"
+          required
+          type="email"
+          [(ngModel)]="student.parentEmail"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Parent's Phone</ion-label>
+        <ion-input name="parentPhone"
+          required
+          type="tel"
+          [(ngModel)]="student.parentPhone"></ion-input>
+      </ion-item>
+      <pre>
+        Status: {{studentForm.form.status}}
+        Pristine: {{studentForm.form.pristine}}
+        Touched: {{studentForm.form.touched}}
+        Errors: {{studentForm.form.errors | json}}
+      </pre>
+    </form>
+    
+  </ion-content>
+  
+</ng-container>
