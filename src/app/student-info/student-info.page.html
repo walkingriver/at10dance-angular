@@ -1,26 +1,28 @@
 <ng-container *ngIf="studentVm$ | async as student">
   <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/roster"></ion-back-button>
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>{{student.firstName}} {{student.lastName}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="onSubmit()"
-       [disabled]="!studentForm.valid" >
-        <ion-icon slot="icon-only"
-          name="save"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/roster"></ion-back-button>
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{student.firstName}} {{student.lastName}}</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="onSubmit()"
+          [disabled]="!studentForm.valid">
+          <ion-icon slot="icon-only"
+            name="save"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
+  <ion-content>
     <form (ngSubmit)="onSubmit()"
       #studentForm="ngForm">
       <ion-item>
-        <ion-label position="stacked">First Name</ion-label>
+        <ion-label [color]="firstName.valid ? '' : 'danger'"
+          position="stacked">First Name <span *ngIf="firstName?.errors?.required">is Required</span>
+        </ion-label>
         <ion-input name="firstName"
           required
           #firstName="ngModel"
@@ -31,6 +33,13 @@
         <ion-input name="lastName"
           required
           [(ngModel)]="student.lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Birth Date</ion-label>
+        <ion-input name="birthDateInput"
+          #birthDate="ngModel"
+          type="date"
+          [(ngModel)]="student.birthDate"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Birth Date</ion-label>
@@ -53,6 +62,7 @@
         <ion-input name="email"
           required
           type="email"
+          [pattern]="emailPattern"
           [(ngModel)]="student.parentEmail"></ion-input>
       </ion-item>
       <ion-item>
@@ -63,13 +73,16 @@
           [(ngModel)]="student.parentPhone"></ion-input>
       </ion-item>
       <pre>
+        {{student | json}}
+      </pre>
+      <pre>
         Status: {{studentForm.form.status}}
         Pristine: {{studentForm.form.pristine}}
         Touched: {{studentForm.form.touched}}
         Errors: {{studentForm.form.errors | json}}
       </pre>
     </form>
-    
+
   </ion-content>
-  
+
 </ng-container>
