@@ -19,59 +19,134 @@
   <ion-content>
     <form (ngSubmit)="onSubmit()"
       #studentForm="ngForm">
-      <ion-item>
-        <ion-label [color]="firstName.valid ? '' : 'danger'"
-          position="stacked">First Name <span *ngIf="firstName?.errors?.required">is Required</span>
-        </ion-label>
-        <ion-input name="firstName"
-          required
-          #firstName="ngModel"
-          [(ngModel)]="student.firstName"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Last Name</ion-label>
-        <ion-input name="lastName"
-          required
-          [(ngModel)]="student.lastName"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Birth Date</ion-label>
-        <ion-input name="birthDateInput"
-          #birthDate="ngModel"
-          type="date"
-          [(ngModel)]="student.birthDate"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Birth Date</ion-label>
-        <ion-datetime presentation="date"
-          name="birthDate"
-          required
-          displayFormat="MM/DD/YYYY"
-          min="1900-01-01"
-          max="2012-12-31"
-          [(ngModel)]="student.birthDate"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Parent's Name</ion-label>
-        <ion-input name="parentName"
-          required
-          [(ngModel)]="student.parentName"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Parent's Email</ion-label>
-        <ion-input name="email"
-          required
-          type="email"
-          [pattern]="emailPattern"
-          [(ngModel)]="student.parentEmail"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Parent's Phone</ion-label>
-        <ion-input name="parentPhone"
-          required
-          type="tel"
-          [(ngModel)]="student.parentPhone"></ion-input>
-      </ion-item>
+      <ng-container>
+        <ion-item>
+          <ion-label [color]="firstName.valid ? '' : 'danger'"
+            position="stacked">First Name <span *ngIf="firstName?.errors?.required">is Required</span>
+          </ion-label>
+          <ion-input name="firstName"
+            required
+            #firstName="ngModel"
+            [(ngModel)]="student.firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Last Name</ion-label>
+          <ion-input name="lastName"
+            required
+            [(ngModel)]="student.lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Birth Date</ion-label>
+          <ion-input name="birthDateInput"
+            #birthDate="ngModel"
+            type="date"
+            [(ngModel)]="student.birthDate"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Birth Date</ion-label>
+          <ion-datetime presentation="date"
+            name="birthDate"
+            required
+            displayFormat="MM/DD/YYYY"
+            min="1900-01-01"
+            max="2012-12-31"
+            [(ngModel)]="student.birthDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Parent's Name</ion-label>
+          <ion-input name="parentName"
+            required
+            [(ngModel)]="student.parentName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Parent's Email</ion-label>
+          <ion-input name="email"
+            required
+            type="email"
+            [pattern]="emailPattern"
+            [(ngModel)]="student.parentEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Parent's Phone</ion-label>
+          <ion-input name="parentPhone"
+            required
+            type="tel"
+            [(ngModel)]="student.parentPhone"></ion-input>
+        </ion-item>
+      </ng-container>
+      <ng-container>
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label [color]="firstName.valid ? '' : 'danger'"
+                  position="stacked">First Name <span *ngIf="firstName?.errors?.required">is Required</span>
+                </ion-label>
+                <ion-input name="firstName"
+                  required
+                  #firstName="ngModel"
+                  [(ngModel)]="student.firstName"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">Last Name</ion-label>
+                <ion-input name="lastName"
+                  required
+                  [(ngModel)]="student.lastName"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">Birth Date</ion-label>
+                <ion-input name="birthDateInput"
+                  #birthDate="ngModel"
+                  type="date"
+                  [(ngModel)]="student.birthDate"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">Parent's Email</ion-label>
+                <ion-input name="email"
+                  required
+                  type="email"
+                  [pattern]="emailPattern"
+                  [(ngModel)]="student.parentEmail"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">Parent's Phone</ion-label>
+                <ion-input name="parentPhone"
+                  required
+                  type="tel"
+                  [(ngModel)]="student.parentPhone"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">Parent's Name</ion-label>
+                <ion-input name="parentName"
+                  required
+                  [(ngModel)]="student.parentName"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="stacked">Birth Date</ion-label>
+                <ion-datetime presentation="date"
+                  name="birthDate"
+                  required
+                  displayFormat="MM/DD/YYYY"
+                  min="1900-01-01"
+                  max="2012-12-31"
+                  [(ngModel)]="student.birthDate"></ion-datetime>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-container>
       <pre>
         {{student | json}}
       </pre>
