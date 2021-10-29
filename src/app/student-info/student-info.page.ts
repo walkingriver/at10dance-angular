@@ -1,44 +1,52 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { StudentsService, Student } from '../students.service';
+
 
 @Component({
   selector: 'app-student-info',
   templateUrl: './student-info.page.html',
   styleUrls: ['./student-info.page.scss'],
 })
-export class StudentInfoPage implements OnInit, OnDestroy {
-  students = [];
-  student: Student = { firstName: '', lastName: '', id: '' };
+export class StudentInfoPage implements OnInit {
+  emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+  student$ = this.route.paramMap.pipe(
+    switchMap(params =>
+      this.studentService.getStudent(params.get('id'))
+    ),
+    tap(student => {
+      if (!student) {
+        this.router.navigateByUrl('/roster');
+      }
+    })
+  );
+
+  studentVm$ = this.student$.pipe(
+    map(this.cloneStudent)
+  );
+
   isMobile = false;
-  sub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private platform: Platform,
     private router: Router,
     private studentService: StudentsService) {
-      this.students = studentService.getAll();
   }
 
   async ngOnInit() {
     await this.platform.ready();
     this.isMobile = this.platform.is('ios') || this.platform.is('android');
-
-    this.sub = this.route.paramMap.subscribe(x => {
-      const id = x.get('id');
-      this.student = this.students.find(x => x.id === id);
-
-      if (!this.student) {
-        this.router.navigateByUrl('/roster');
-      }
-    });
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  cloneStudent(student: Student): Student {
+    return JSON.parse(JSON.stringify(student));
   }
 
+  onSubmit() {
+    console.log('submitted');
+  }
 }
