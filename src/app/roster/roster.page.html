@@ -4,6 +4,17 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Class Roster</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addStudent()">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onSeed()">
+        <ion-icon slot="icon-only" name="egg"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onClear()">
+        <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

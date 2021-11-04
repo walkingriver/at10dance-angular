@@ -7,7 +7,7 @@
       </ion-buttons>
       <ion-title>{{student.firstName}} {{student.lastName}}</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="onSubmit()"
+        <ion-button (click)="onSubmit(student)"
           [disabled]="!studentForm.valid">
           <ion-icon slot="icon-only"
             name="save"></ion-icon>
@@ -17,7 +17,7 @@
   </ion-header>
 
   <ion-content>
-    <form (ngSubmit)="onSubmit()"
+    <form (ngSubmit)="onSubmit(student)"
       #studentForm="ngForm">
       <ng-container>
         <ion-item>

@@ -46,7 +46,8 @@ export class StudentInfoPage implements OnInit {
     return JSON.parse(JSON.stringify(student));
   }
 
-  onSubmit() {
-    console.log('submitted');
+  async onSubmit(student) {
+    await this.studentService.saveStudent(student);
+    this.router.navigateByUrl('/roster');
   }
 }

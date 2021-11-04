@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
+import { concatMap, Observable, Subject } from 'rxjs';
 
 const STUDENTS_KEY = 'students';
 
@@ -32,14 +33,19 @@ const mockStudents: Student[] = [
   providedIn: 'root'
 })
 export class StudentsService {
+  students$ = new Subject<Student[]>();
+
   constructor() { }
 
-  async getAll(): Promise<Student[]> {
+  allStudents() {
+    return this.students$.asObservable();
+  }
+
+  async pushAll(): Promise<void> {
     const allKeys = await Storage.keys()
     const studentKeys = allKeys.keys.filter(key => key.startsWith(STUDENTS_KEY));
-    const students = studentKeys.map(key => this.getStudentByKey(key));
-
-    return Promise.all(students);
+    const students = await Promise.all(studentKeys.map(key => this.getStudentByKey(key)));
+    this.students$.next(students);
   }
 
   getStudent(id: string): Promise<Student> {
@@ -52,28 +58,31 @@ export class StudentsService {
     return JSON.parse(result.value);
   }
 
-  saveStudent(student: Student) {
-    const saveResult = Storage.set({
+  async saveStudent(student: Student) {
+    await Storage.set({
       key: `${STUDENTS_KEY}-${student.id}`,
       value: JSON.stringify(student)
     });
 
-    return saveResult;
+    this.pushAll();
   }
 
-  deleteStudent(id: string) {
-    const deleteResult = Storage.remove({ key: `${STUDENTS_KEY}-${id}` });
+  async deleteStudent(id: string) {
+    await Storage.remove({ key: `${STUDENTS_KEY}-${id}` });
 
-    return deleteResult;
+    this.pushAll();
   }
 
-  clearData() {
-    return Storage.clear();
+  async clearData() {
+    await Storage.clear();
+
+    this.pushAll();
   }
 
-  seedData() {
-    const saveAll = mockStudents.map(student => this.saveStudent(student));
+  async seedData() {
 
-    return Promise.all(saveAll);
+    await mockStudents.map(student => this.saveStudent(student));
+
+    this.pushAll();
   }
 }
