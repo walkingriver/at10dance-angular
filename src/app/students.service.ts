@@ -41,10 +41,15 @@ export class StudentsService {
     return this.students$.asObservable();
   }
 
-  async pushAll(): Promise<void> {
+  private async getAllStudents() {
     const allKeys = await Storage.keys()
     const studentKeys = allKeys.keys.filter(key => key.startsWith(STUDENTS_KEY));
     const students = await Promise.all(studentKeys.map(key => this.getStudentByKey(key)));
+    return students;
+  }
+
+  async pushAll(): Promise<void> {
+    const students = await this.getAllStudents();
     this.students$.next(students);
   }
 
@@ -58,12 +63,26 @@ export class StudentsService {
     return JSON.parse(result.value);
   }
 
-  async saveStudent(student: Student) {
+  async resetAttendance() {
+    const students = await this.getAllStudents();
+
+    await students.map(student => {
+      delete student.status;
+      this.doSaveStudent(student);
+    });
+
+    this.pushAll();
+  }
+
+  async doSaveStudent(student) {
     await Storage.set({
       key: `${STUDENTS_KEY}-${student.id}`,
       value: JSON.stringify(student)
     });
+  }
 
+  async saveStudent(student: Student) {
+    this.doSaveStudent(student);
     this.pushAll();
   }
 

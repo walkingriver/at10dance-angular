@@ -97,6 +97,10 @@ export class RosterPage implements OnInit {
     await alert.present();
   }
 
+  resetAttendance() {
+    this.studentService.resetAttendance();
+  }
+
   addStudent() {
     // To be completed
   }

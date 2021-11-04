@@ -6,13 +6,16 @@
     <ion-title>Class Roster</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="addStudent()">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+        <ion-icon slot="icon-only"
+          name="add"></ion-icon>
       </ion-button>
       <ion-button (click)="onSeed()">
-        <ion-icon slot="icon-only" name="egg"></ion-icon>
+        <ion-icon slot="icon-only"
+          name="egg"></ion-icon>
       </ion-button>
       <ion-button (click)="onClear()">
-        <ion-icon slot="icon-only" name="close-circle-outline"></ion-icon>
+        <ion-icon slot="icon-only"
+          name="close-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -22,29 +25,60 @@
   <ion-list>
     <ion-item-sliding *ngFor="let student of students$ | async">
       <ion-item>
-        <ion-icon slot="start" name="person-outline">
+        <ion-icon slot="start"
+          name="person-outline">
         </ion-icon>
         <ion-label>{{student.lastName}}, {{student.firstName}}
         </ion-label>
-        <ion-icon *ngIf="student.status==='present'" slot="end" name="eye"></ion-icon>
-        <ion-icon *ngIf="student.status==='absent'" slot="end" name="eye-off-outline"></ion-icon>
+        <ion-icon *ngIf="student.status==='present'"
+          slot="end"
+          name="eye"></ion-icon>
+        <ion-icon *ngIf="student.status==='absent'"
+          slot="end"
+          name="eye-off-outline"></ion-icon>
 
 
         <ion-buttons slot="end">
           <ion-button (click)="presentActionSheet(student)">
-            <ion-icon slot="icon-only" name="ellipsis-horizontal-outline">
+            <ion-icon slot="icon-only"
+              name="ellipsis-horizontal-outline">
             </ion-icon>
           </ion-button>
-          <ion-button [href]="studentUrl(student)" routerDirection="forward">
-            <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+          <ion-button [href]="studentUrl(student)"
+            routerDirection="forward">
+            <ion-icon slot="icon-only"
+              name="chevron-forward-outline"></ion-icon>
           </ion-button>
         </ion-buttons>
 
-        
+
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="deleteStudent(student)">Delete</ion-item-option>
+        <ion-item-option color="danger"
+          (click)="deleteStudent(student)">Delete</ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-fab vertical="bottom"
+    horizontal="end"
+    slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="addStudent()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="resetAttendance()">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="onClear()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="onSeed()">
+        <ion-icon name="egg"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>
