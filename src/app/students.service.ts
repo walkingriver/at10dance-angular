@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { catchError, defer, from, map, Observable, of } from 'rxjs';
+import { KeysResult, Storage } from '@capacitor/storage';
+import { mergeMap, switchMap } from 'rxjs/operators';
+
+const STUDENTS_KEY = 'students';
 
 export interface Student {
   id: string;
@@ -17,7 +21,7 @@ const mockStudents: Student[] = [
   { id: '1', firstName: 'Greg', lastName: 'Marine', birthDate: new Date('01/01/2000'), parentName: 'Bill Marine', parentEmail: 'billmarine@gmail.com', parentPhone: '555-555-5555' },
   { id: '2', firstName: 'Jonathan', lastName: 'Bennett', birthDate: new Date('01/01/2000'), parentName: 'Bill Bennett', parentEmail: '', parentPhone: '555-555-5555' },
   { id: '3', firstName: 'Neil', lastName: 'Estandarte', birthDate: new Date('01/01/2000'), parentName: 'Bill Estandarte', parentEmail: '', parentPhone: '555-555-5555' },
-  { id: '4', firstName: 'Jennifer', lastName: 'Townsend',  birthDate: new Date('01/01/2000'), parentName: 'Bill Townsend', parentEmail: '', parentPhone: '555-555-5555' },
+  { id: '4', firstName: 'Jennifer', lastName: 'Townsend', birthDate: new Date('01/01/2000'), parentName: 'Bill Townsend', parentEmail: '', parentPhone: '555-555-5555' },
   { id: '5', firstName: 'Casey', lastName: 'McBride', birthDate: new Date('01/01/2000'), parentName: 'Bill McBride', parentEmail: '', parentPhone: '555-555-5555' },
   { id: '6', firstName: 'Diane', lastName: 'Rivera', birthDate: new Date('01/01/2000'), parentName: 'Bill Rivera', parentEmail: '', parentPhone: '555-555-5555' },
   { id: '7', firstName: 'Troy', lastName: 'Gutierrez', birthDate: new Date('01/01/2000'), parentName: 'Bill Gutierrez', parentEmail: '', parentPhone: '555-555-5555' },
@@ -30,14 +34,48 @@ const mockStudents: Student[] = [
   providedIn: 'root'
 })
 export class StudentsService {
-
   constructor() { }
 
-  getAll() {
-    return [...mockStudents];
+  async getAll(): Promise<Student[]> {
+    const allKeys = await Storage.keys()
+    const studentKeys = allKeys.keys.filter(key => key.startsWith(STUDENTS_KEY));
+    const students = studentKeys.map(key => this.getStudentByKey({ key }));
+
+    return Promise.all(students);
   }
 
-  getStudent(id: string): Observable<Student> {
-    return of(mockStudents.find(student => student.id === id));
+  getStudent(id: string): Promise<Student> {
+    return this.getStudentByKey({ key: `${STUDENTS_KEY}-${id}` });
+  }
+
+  private async getStudentByKey(key: { key: string }): Promise<Student> {
+    const result = await Storage.get({ key: key.key });
+
+    return JSON.parse(result.value);
+  }
+
+  saveStudent(student: Student) {
+    const saveResult = Storage.set({
+      key: `${STUDENTS_KEY}-${student.id}`,
+      value: JSON.stringify(student)
+    });
+
+    return from(saveResult);
+  }
+
+  deleteStudent(id: string) {
+    const deleteResult = Storage.remove({ key: `${STUDENTS_KEY}-${id}` });
+
+    return deleteResult;
+  }
+
+  clearData() {
+    return Storage.clear();
+  }
+
+  seedData() {
+    const saveAll = mockStudents.map(student => this.saveStudent(student));
+
+    return Promise.all(saveAll);
   }
 }

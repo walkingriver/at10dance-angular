@@ -8,7 +8,7 @@ import { Student, StudentsService } from '../students.service';
   styleUrls: ['./roster.page.scss'],
 })
 export class RosterPage implements OnInit {
-  students: Student[] = [];
+  students$;
 
 constructor(
   private actionSheetController: ActionSheetController,
@@ -17,7 +17,7 @@ constructor(
   private toastController: ToastController) { }
 
 ngOnInit() {
-  this.students = this.studentService.getAll();
+  this.students$ = this.studentService.getAll();
 }
   
   studentUrl(student: Student) {
