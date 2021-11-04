@@ -39,17 +39,17 @@ export class StudentsService {
   async getAll(): Promise<Student[]> {
     const allKeys = await Storage.keys()
     const studentKeys = allKeys.keys.filter(key => key.startsWith(STUDENTS_KEY));
-    const students = studentKeys.map(key => this.getStudentByKey({ key }));
+    const students = studentKeys.map(key => this.getStudentByKey(key));
 
     return Promise.all(students);
   }
 
   getStudent(id: string): Promise<Student> {
-    return this.getStudentByKey({ key: `${STUDENTS_KEY}-${id}` });
+    return this.getStudentByKey(`${STUDENTS_KEY}-${id}`);
   }
 
-  private async getStudentByKey(key: { key: string }): Promise<Student> {
-    const result = await Storage.get({ key: key.key });
+  private async getStudentByKey(key: string): Promise<Student> {
+    const result = await Storage.get({ key });
 
     return JSON.parse(result.value);
   }
