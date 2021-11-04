@@ -16,7 +16,8 @@ constructor(
   private studentService: StudentsService,
   private toastController: ToastController) { }
 
-ngOnInit() {
+async ngOnInit() {
+  await this.studentService.seedData();
   this.students$ = this.studentService.getAll();
 }
   
@@ -82,7 +83,8 @@ async presentDeleteAlert(student: Student) {
 }
 
 async deleteStudent(student: Student) {
-  this.students = this.students.filter(x => x.id !== student.id);
+  await this.studentService.deleteStudent(student.id);
+  this.students$ = this.studentService.getAll();
   const alert = await this.toastController.create(
     {
       message: `${student.firstName} ${student.lastName} has been deleted.`,

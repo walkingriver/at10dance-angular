@@ -9,7 +9,7 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let student of students">
+    <ion-item-sliding *ngFor="let student of students$ | async">
       <ion-item>
         <ion-icon slot="start" name="person-outline">
         </ion-icon>
