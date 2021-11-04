@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, defer, from, map, Observable, of } from 'rxjs';
-import { KeysResult, Storage } from '@capacitor/storage';
-import { mergeMap, switchMap } from 'rxjs/operators';
+import { Storage } from '@capacitor/storage';
 
 const STUDENTS_KEY = 'students';
 
@@ -60,7 +58,7 @@ export class StudentsService {
       value: JSON.stringify(student)
     });
 
-    return from(saveResult);
+    return saveResult;
   }
 
   deleteStudent(id: string) {
