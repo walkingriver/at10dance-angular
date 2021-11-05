@@ -66,11 +66,12 @@ export class StudentsService {
   async resetAttendance() {
     const students = await this.getAllStudents();
 
-    await students.map(student => {
+    const results = students.map(student => {
       delete student.status;
-      this.doSaveStudent(student);
+      return this.doSaveStudent(student);
     });
 
+    await Promise.all(results);
     this.pushAll();
   }
 
@@ -82,26 +83,23 @@ export class StudentsService {
   }
 
   async saveStudent(student: Student) {
-    this.doSaveStudent(student);
+    await this.doSaveStudent(student);
     this.pushAll();
   }
 
   async deleteStudent(id: string) {
     await Storage.remove({ key: `${STUDENTS_KEY}-${id}` });
-
     this.pushAll();
   }
 
   async clearData() {
     await Storage.clear();
-
     this.pushAll();
   }
 
   async seedData() {
-
-    await mockStudents.map(student => this.saveStudent(student));
-
+    const results = mockStudents.map(student => this.doSaveStudent(student));
+    await Promise.all(results);
     this.pushAll();
   }
 }
