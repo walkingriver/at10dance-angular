@@ -1,30 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { StudentsService } from './students.service';
+import { Component, OnInit } from "@angular/core";
+import { Platform } from "@ionic/angular";
+import { StudentsService } from "./students.service";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss']
+  selector: "app-root",
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.scss"],
 })
 export class AppComponent implements OnInit {
   public appPages = [
     {
-      title: 'Home',
-      url: '/home',
-      icon: 'home'
+      title: "Home",
+      url: "/home",
+      icon: "home",
     },
     {
-      title: 'Roster',
-      url: '/roster',
-      icon: 'people'
-    }
+      title: "Roster",
+      url: "/roster",
+      icon: "people",
+    },
   ];
 
-  constructor(
-    private platform: Platform,
-    private students: StudentsService
-  ) {
+  constructor(private platform: Platform, private students: StudentsService) {
     this.initializeApp();
   }
 

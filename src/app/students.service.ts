@@ -185,12 +185,12 @@ export class StudentsService {
   }
 
   public markPresent(student: Student): Promise<void> {
-    student.status = 'present';
+    student.status = "present";
     return this.doSaveStudent(student);
   }
 
   public markAbsent(student: Student): Promise<void> {
-    student.status = 'absent';
+    student.status = "absent";
     return this.doSaveStudent(student);
   }
 
