@@ -160,13 +160,8 @@ export class StudentsService {
 
   public async resetAttendance(): Promise<void> {
     const students = await this.getAllStudents();
-
-    const results = students.map((student) => {
-      delete student.status;
-      return this.doSaveStudent(student);
-    });
-
-    await Promise.all(results);
+    var tasks = students.map(({ status, ...student }) => this.doSaveStudent(student));
+    await Promise.all(tasks);
     this.pushAll();
   }
 
@@ -178,10 +173,7 @@ export class StudentsService {
   }
 
   public async saveStudent(student: Student): Promise<void> {
-    if (!student.id) {
-      student.id = uuidv4();
-    }
-
+    student.id ??= uuidv4();
     await this.doSaveStudent(student);
     this.pushAll();
   }
