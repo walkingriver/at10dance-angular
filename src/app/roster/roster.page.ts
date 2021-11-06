@@ -101,10 +101,6 @@ export class RosterPage implements OnInit {
     this.studentService.resetAttendance();
   }
 
-  addStudent() {
-    // To be completed
-  }
-
   // Debugging only features
   onSeed() {
     this.studentService.seedData();

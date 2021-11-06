@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
-import { concatMap, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 
 const STUDENTS_KEY = 'students';
 
@@ -15,6 +16,17 @@ export interface Student {
   photoUrl?: string;
   status?: 'present' | 'absent';
 }
+
+const newStudent: Student = {
+  id: '',
+  firstName: '',
+  lastName: '',
+  parentName: '',
+  parentEmail: '',
+  parentPhone: '',
+  photoUrl: ''
+};
+
 
 const mockStudents: Student[] = [
   { id: '1', firstName: 'Greg', lastName: 'Marine', birthDate: new Date('01/01/2000'), parentName: 'Bill Marine', parentEmail: 'billmarine@gmail.com', parentPhone: '555-555-5555' },
@@ -54,6 +66,10 @@ export class StudentsService {
   }
 
   getStudent(id: string): Promise<Student> {
+    if (id === 'new') {
+      return Promise.resolve(newStudent);
+    }
+
     return this.getStudentByKey(`${STUDENTS_KEY}-${id}`);
   }
 
@@ -75,7 +91,7 @@ export class StudentsService {
     this.pushAll();
   }
 
-  async doSaveStudent(student) {
+  private async doSaveStudent(student) {
     await Storage.set({
       key: `${STUDENTS_KEY}-${student.id}`,
       value: JSON.stringify(student)
@@ -83,6 +99,10 @@ export class StudentsService {
   }
 
   async saveStudent(student: Student) {
+    if (!student.id) {
+      student.id = uuidv4();
+    }
+
     await this.doSaveStudent(student);
     this.pushAll();
   }
