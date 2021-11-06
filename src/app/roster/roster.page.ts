@@ -18,7 +18,6 @@ export class RosterPage implements OnInit {
 
   async ngOnInit() {
     this.students$ = this.studentService.allStudents();
-    this.studentService.pushAll();
   }
 
   studentUrl(student: Student) {
