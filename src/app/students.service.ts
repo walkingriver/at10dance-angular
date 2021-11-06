@@ -125,6 +125,10 @@ const mockStudents: Student[] = [
 export class StudentsService {
   private students$ = new BehaviorSubject<Student[]>([]);
 
+  public init(): Promise<void> {
+    return this.pushAll();
+  }
+
   public allStudents(): Observable<Student[]> {
     return this.students$.asObservable();
   }
