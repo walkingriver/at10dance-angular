@@ -1,22 +1,22 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { Platform } from "@ionic/angular";
-import { SplashScreen } from "@ionic-native/splash-screen/ngx";
-import { StatusBar } from "@ionic-native/status-bar/ngx";
-import { RouterTestingModule } from "@angular/router/testing";
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { RouterTestingModule } from '@angular/router/testing';
 
-import { AppComponent } from "./app.component";
+import { AppComponent } from './app.component';
 
-describe("AppComponent", () => {
+describe('AppComponent', () => {
   let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
 
   beforeEach(
     waitForAsync(() => {
-      statusBarSpy = jasmine.createSpyObj("StatusBar", ["styleDefault"]);
-      splashScreenSpy = jasmine.createSpyObj("SplashScreen", ["hide"]);
+      statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
+      splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
       platformReadySpy = Promise.resolve();
-      platformSpy = jasmine.createSpyObj("Platform", {
+      platformSpy = jasmine.createSpyObj('Platform', {
         ready: platformReadySpy,
       });
 
@@ -33,13 +33,13 @@ describe("AppComponent", () => {
     })
   );
 
-  it("should create the app", async () => {
+  it('should create the app', async () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it("should initialize the app", async () => {
+  it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.ready).toHaveBeenCalled();
     await platformReadySpy;
@@ -47,27 +47,27 @@ describe("AppComponent", () => {
     expect(splashScreenSpy.hide).toHaveBeenCalled();
   });
 
-  it("should have menu labels", async () => {
+  it('should have menu labels', async () => {
     const fixture = await TestBed.createComponent(AppComponent);
     await fixture.detectChanges();
     const app = fixture.nativeElement;
-    const menuItems = app.querySelectorAll("ion-label");
+    const menuItems = app.querySelectorAll('ion-label');
     expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].textContent).toContain("Inbox");
-    expect(menuItems[1].textContent).toContain("Outbox");
+    expect(menuItems[0].textContent).toContain('Inbox');
+    expect(menuItems[1].textContent).toContain('Outbox');
   });
 
-  it("should have urls", async () => {
+  it('should have urls', async () => {
     const fixture = await TestBed.createComponent(AppComponent);
     await fixture.detectChanges();
     const app = fixture.nativeElement;
-    const menuItems = app.querySelectorAll("ion-item");
+    const menuItems = app.querySelectorAll('ion-item');
     expect(menuItems.length).toEqual(12);
-    expect(menuItems[0].getAttribute("ng-reflect-router-link")).toEqual(
-      "/folder/Inbox"
+    expect(menuItems[0].getAttribute('ng-reflect-router-link')).toEqual(
+      '/folder/Inbox'
     );
-    expect(menuItems[1].getAttribute("ng-reflect-router-link")).toEqual(
-      "/folder/Outbox"
+    expect(menuItems[1].getAttribute('ng-reflect-router-link')).toEqual(
+      '/folder/Outbox'
     );
   });
 });

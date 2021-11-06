@@ -1,28 +1,28 @@
-import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "",
-    redirectTo: "home",
-    pathMatch: "full",
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
-    path: "home",
+    path: 'home',
     loadChildren: () =>
-      import("./home/home.module").then((m) => m.HomePageModule),
+      import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
-    path: "student/:id",
+    path: 'student/:id',
     loadChildren: () =>
-      import("./student-info/student-info.module").then(
+      import('./student-info/student-info.module').then(
         (m) => m.StudentInfoPageModule
       ),
   },
   {
-    path: "roster",
+    path: 'roster',
     loadChildren: () =>
-      import("./roster/roster.module").then((m) => m.RosterPageModule),
+      import('./roster/roster.module').then((m) => m.RosterPageModule),
   },
 ];
 
@@ -30,7 +30,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       preloadingStrategy: PreloadAllModules,
-      relativeLinkResolution: "legacy",
+      relativeLinkResolution: 'legacy',
     }),
   ],
   exports: [RouterModule],

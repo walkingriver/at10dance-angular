@@ -1,16 +1,16 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 import {
   ActionSheetController,
   AlertController,
   ToastController,
-} from "@ionic/angular";
-import { Observable } from "rxjs";
-import { Student, StudentsService } from "../students.service";
+} from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Student, StudentsService } from '../students.service';
 
 @Component({
-  selector: "app-roster",
-  templateUrl: "./roster.page.html",
-  styleUrls: ["./roster.page.scss"],
+  selector: 'app-roster',
+  templateUrl: './roster.page.html',
+  styleUrls: ['./roster.page.scss'],
 })
 export class RosterPage {
   students$: Observable<Student[]>;
@@ -33,26 +33,26 @@ export class RosterPage {
       header: `${student.firstName} ${student.lastName}`,
       buttons: [
         {
-          text: "Mark Present",
-          icon: "eye",
+          text: 'Mark Present',
+          icon: 'eye',
           handler: () => this.studentService.markPresent(student),
         },
         {
-          text: "Mark Absent",
-          icon: "eye-off-outline",
+          text: 'Mark Absent',
+          icon: 'eye-off-outline',
           handler: () => this.studentService.markAbsent(student),
         },
         {
-          text: "Delete",
-          icon: "trash",
-          role: "destructive",
+          text: 'Delete',
+          icon: 'trash',
+          role: 'destructive',
           handler: () => this.presentDeleteAlert(student),
         },
         {
-          text: "Cancel",
-          icon: "close",
-          role: "cancel",
-          handler: () => console.log("Cancel clicked"),
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => console.log('Cancel clicked'),
         },
       ],
     });
@@ -62,17 +62,17 @@ export class RosterPage {
 
   async presentDeleteAlert(student: Student) {
     const alert = await this.alertController.create({
-      header: "Delete this student?",
+      header: 'Delete this student?',
       subHeader: `${student.firstName} ${student.lastName}`,
-      message: "This operation cannot be undone.",
+      message: 'This operation cannot be undone.',
       buttons: [
         {
-          text: "Delete",
+          text: 'Delete',
           handler: () => this.deleteStudent(student),
         },
         {
-          text: "Never mind",
-          role: "cancel",
+          text: 'Never mind',
+          role: 'cancel',
         },
       ],
     });
@@ -85,7 +85,7 @@ export class RosterPage {
 
     const alert = await this.toastController.create({
       message: `${student.firstName} ${student.lastName} has been deleted.`,
-      position: "top",
+      position: 'top',
       duration: 3000,
     });
 

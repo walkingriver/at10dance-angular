@@ -1,9 +1,9 @@
-import { CapacitorConfig } from "@capacitor/cli";
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: "io.ionic.starter",
-  appName: "at10dance",
-  webDir: "www",
+  appId: 'io.ionic.starter',
+  appName: 'at10dance',
+  webDir: 'www',
   bundledWebRuntime: false,
 };
 

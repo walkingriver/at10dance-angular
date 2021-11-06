@@ -1,12 +1,12 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import { IonicModule } from "@ionic/angular";
+import { IonicModule } from '@ionic/angular';
 
-import { StudentInfoPageRoutingModule } from "./student-info-routing.module";
+import { StudentInfoPageRoutingModule } from './student-info-routing.module';
 
-import { StudentInfoPage } from "./student-info.page";
+import { StudentInfoPage } from './student-info.page';
 
 @NgModule({
   imports: [
