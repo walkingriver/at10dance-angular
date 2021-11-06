@@ -8,7 +8,6 @@ import { StudentsService } from './students.service';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit {
-  public selectedIndex = 0;
   public appPages = [
     {
       title: 'Home',
@@ -37,11 +36,6 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const path = window.location.pathname.split('/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
-    }
-
     await this.students.init();
   }
 }
