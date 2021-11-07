@@ -9,12 +9,7 @@ import { RosterPageRoutingModule } from './roster-routing.module';
 import { RosterPage } from './roster.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RosterPageRoutingModule
-  ],
-  declarations: [RosterPage]
+  imports: [CommonModule, FormsModule, IonicModule, RosterPageRoutingModule],
+  declarations: [RosterPage],
 })
 export class RosterPageModule {}

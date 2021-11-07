@@ -13,8 +13,8 @@ import { StudentInfoPage } from './student-info.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    StudentInfoPageRoutingModule
+    StudentInfoPageRoutingModule,
   ],
-  declarations: [StudentInfoPage]
+  declarations: [StudentInfoPage],
 })
 export class StudentInfoPageModule {}

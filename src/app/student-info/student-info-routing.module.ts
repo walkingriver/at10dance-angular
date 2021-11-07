@@ -6,8 +6,8 @@ import { StudentInfoPage } from './student-info.page';
 const routes: Routes = [
   {
     path: '',
-    component: StudentInfoPage
-  }
+    component: StudentInfoPage,
+  },
 ];
 
 @NgModule({
