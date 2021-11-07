@@ -20,6 +20,11 @@
     <form (ngSubmit)="onSubmit(student)"
       #studentForm="ngForm">
       <ng-container>
+        <ion-item (click)="takePicture(student)">
+          <ion-label position="floating">Photo (Click to change)</ion-label>
+          <img *ngIf="student?.image" class="student-photo" [src]="student.image">
+          <img *ngIf="!student?.image" class="student-photo" src="./assets/images/camera.png">
+        </ion-item>
         <ion-item>
           <ion-label [color]="firstName.valid ? '' : 'danger'"
             position="stacked">First Name <span *ngIf="firstName?.errors?.required">is Required</span>

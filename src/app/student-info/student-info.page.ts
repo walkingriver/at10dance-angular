@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { StudentsService, Student } from '../students.service';
 
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-student-info',
@@ -50,4 +51,22 @@ export class StudentInfoPage implements OnInit {
     await this.studentService.saveStudent(student);
     this.router.navigateByUrl('/roster');
   }
+
+  async takePicture(student) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    var imageUrl = image.dataUrl;
+
+    // Can be set to the src of an image now
+    console.log(imageUrl);
+    student.image = imageUrl;
+  };
 }
