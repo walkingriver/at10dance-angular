@@ -19,11 +19,11 @@ const routes: Routes = [
         (m) => m.StudentInfoPageModule
       ),
   },
-  {
-    path: 'roster',
-    loadChildren: () =>
-      import('./roster/roster.module').then((m) => m.RosterPageModule),
-  },
+{
+  path: 'roster',
+  loadChildren: () =>
+    import('./roster/roster.module').then((m) => m.RosterPageModule),
+},
 ];
 
 @NgModule({
@@ -35,4 +35,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

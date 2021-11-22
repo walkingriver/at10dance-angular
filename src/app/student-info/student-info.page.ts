@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { StudentsService, Student } from '../students.service';
+import { StudentsService } from '../students.service';
 
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Student } from '../student';
 
 @Component({
   selector: 'app-student-info',
@@ -53,6 +54,7 @@ export class StudentInfoPage implements OnInit {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
+      source: CameraSource.Camera,
       resultType: CameraResultType.DataUrl
     });
 

@@ -2,20 +2,9 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@capacitor/storage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
+import { Student } from './student';
 
 const STUDENTS_KEY = 'students';
-
-export interface Student {
-  id: string;
-  firstName: string;
-  lastName: string;
-  birthDate?: Date;
-  parentName?: string;
-  parentEmail?: string;
-  parentPhone?: string;
-  photoUrl?: string;
-  status?: 'present' | 'absent';
-}
 
 const newStudent: Student = {
   id: '',
