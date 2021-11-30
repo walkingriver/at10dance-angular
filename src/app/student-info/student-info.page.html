@@ -7,7 +7,7 @@
       </ion-buttons>
       <ion-title>{{student.firstName}} {{student.lastName}}</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="onSubmit()"
+        <ion-button (click)="onSubmit(student)"
           [disabled]="!studentForm.valid">
           <ion-icon slot="icon-only"
             name="save"></ion-icon>
@@ -17,12 +17,24 @@
   </ion-header>
 
   <ion-content>
-    <form (ngSubmit)="onSubmit()"
+    <form (ngSubmit)="onSubmit(student)"
       #studentForm="ngForm">
       <ng-container>
         <ion-item>
+          <ion-label>Photo (Click to change)</ion-label>
+        </ion-item>
+        <ion-item (click)="takePicture(student)">
+          <img *ngIf="student?.image"
+            class="student-photo"
+            [src]="student.image">
+          <img *ngIf="!student?.image"
+            class="student-photo"
+            src="./assets/images/camera.png">
+        </ion-item>
+        <ion-item>
           <ion-label [color]="firstName.valid ? '' : 'danger'"
-            position="stacked">First Name <span *ngIf="firstName?.errors?.required">is Required</span>
+            position="stacked">First Name
+            <span *ngIf="firstName?.errors?.required">is Required</span>
           </ion-label>
           <ion-input name="firstName"
             required
@@ -47,9 +59,9 @@
           <ion-datetime presentation="date"
             name="birthDate"
             required
-            displayFormat="MM/DD/YYYY"
             min="1900-01-01"
             max="2012-12-31"
+            size="cover"
             [(ngModel)]="student.birthDate"></ion-datetime>
         </ion-item>
         <ion-item>
@@ -80,7 +92,8 @@
             <ion-col>
               <ion-item>
                 <ion-label [color]="firstName.valid ? '' : 'danger'"
-                  position="stacked">First Name <span *ngIf="firstName?.errors?.required">is Required</span>
+                  position="stacked">First Name
+                  <span *ngIf="firstName?.errors?.required">is Required</span>
                 </ion-label>
                 <ion-input name="firstName"
                   required
@@ -137,8 +150,8 @@
                 <ion-label position="stacked">Birth Date</ion-label>
                 <ion-datetime presentation="date"
                   name="birthDate"
+                  size="fixed"
                   required
-                  displayFormat="MM/DD/YYYY"
                   min="1900-01-01"
                   max="2012-12-31"
                   [(ngModel)]="student.birthDate"></ion-datetime>
@@ -157,7 +170,5 @@
         Errors: {{studentForm.form.errors | json}}
       </pre>
     </form>
-
   </ion-content>
-
 </ng-container>
