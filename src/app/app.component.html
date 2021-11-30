@@ -7,7 +7,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list id="inbox-list">
+        <ion-list>
           <ion-menu-toggle *ngFor="let page of appPages" auto-hide="false">
             <ion-item
               [routerLink]="[page.url]"
