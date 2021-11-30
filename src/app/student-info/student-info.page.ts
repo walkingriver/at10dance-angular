@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { StudentsService, Student } from '../students.service';
+import { StudentsService } from '../students.service';
 
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Student } from '../student';
 
 @Component({
   selector: 'app-student-info',
@@ -11,22 +13,19 @@ import { StudentsService, Student } from '../students.service';
   styleUrls: ['./student-info.page.scss'],
 })
 export class StudentInfoPage implements OnInit {
-  emailPattern = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  emailPattern =
+    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   student$ = this.route.paramMap.pipe(
-    switchMap(params =>
-      this.studentService.getStudent(params.get('id'))
-    ),
-    tap(student => {
+    switchMap((params) => this.studentService.getStudent(params.get('id'))),
+    tap((student) => {
       if (!student) {
         this.router.navigateByUrl('/roster');
       }
     })
   );
 
-  studentVm$ = this.student$.pipe(
-    map(this.cloneStudent)
-  );
+  studentVm$ = this.student$.pipe(map(this.cloneStudent));
 
   isMobile = false;
 
@@ -34,8 +33,8 @@ export class StudentInfoPage implements OnInit {
     private route: ActivatedRoute,
     private platform: Platform,
     private router: Router,
-    private studentService: StudentsService) {
-  }
+    private studentService: StudentsService
+  ) {}
 
   async ngOnInit() {
     await this.platform.ready();
@@ -46,7 +45,27 @@ export class StudentInfoPage implements OnInit {
     return JSON.parse(JSON.stringify(student));
   }
 
-  onSubmit() {
-    console.log('submitted');
+  async onSubmit(student) {
+    await this.studentService.saveStudent(student);
+    this.router.navigateByUrl('/roster');
   }
+
+  async takePicture(student) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      source: CameraSource.Camera,
+      resultType: CameraResultType.DataUrl
+    });
+
+    // image.webPath will contain a path that can be set as an image src.
+    // You can access the original file using image.path, which can be
+    // passed to the Filesystem API to read the raw data of the image,
+    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+    var imageUrl = image.dataUrl;
+
+    // Can be set to the src of an image now
+    console.log(imageUrl);
+    student.image = imageUrl;
+  };
 }

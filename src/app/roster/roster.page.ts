@@ -1,96 +1,113 @@
-import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
-import { Student, StudentsService } from '../students.service';
+import { Component } from '@angular/core';
+import {
+  ActionSheetButton,
+  ActionSheetController,
+  AlertButton,
+  AlertController,
+  ToastController,
+} from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { Student } from '../student';
+import { StudentsService } from '../students.service';
 
 @Component({
   selector: 'app-roster',
   templateUrl: './roster.page.html',
   styleUrls: ['./roster.page.scss'],
 })
-export class RosterPage implements OnInit {
-  students: Student[] = [];
+export class RosterPage {
+  students$: Observable<Student[]>;
 
-constructor(
-  private actionSheetController: ActionSheetController,
-  private alertController: AlertController,
-  private studentService: StudentsService,
-  private toastController: ToastController) { }
-
-ngOnInit() {
-  this.students = this.studentService.getAll();
-}
-  
-  studentUrl(student: Student) {
-    return `/student/${student.id}`;
+  constructor(
+    private actionSheetController: ActionSheetController,
+    private alertController: AlertController,
+    private studentService: StudentsService,
+    private toastController: ToastController
+  ) {
+    this.students$ = this.studentService.allStudents();
   }
 
-async presentActionSheet(student: Student) {
-  const actionSheet = await this.actionSheetController.create({
-    header: `${student.firstName} ${student.lastName}`,
-    buttons: [{
+
+  async presentActionSheet(student: Student) {
+    const markPresentButton: ActionSheetButton = {
       text: 'Mark Present',
       icon: 'eye',
-      handler: () => {
-        student.status = 'present';
-      }
-    }, {
+      handler: () => this.studentService.markPresent(student)
+    };
+
+    const markAbsentButton: ActionSheetButton = {
       text: 'Mark Absent',
+      role: 'selected',
       icon: 'eye-off-outline',
-      handler: () => {
-        student.status = 'absent';
-      }
-    }, {
+      handler: () => this.studentService.markAbsent(student)
+    };
+
+    const deleteButton: ActionSheetButton = {
       text: 'Delete',
       icon: 'trash',
       role: 'destructive',
-      handler: () => {
-        this.presentDeleteAlert(student);
-      }
-    }, {
+      handler: () => this.confirmDeleteStudent(student)
+    };
+
+    const cancelButton: ActionSheetButton = {
       text: 'Cancel',
       icon: 'close',
+      role: 'cancel'
+    };
+
+    const actionSheet = await this.actionSheetController.create({
+      header: `${student.firstName} ${student.lastName}`,
+      buttons: [
+        markPresentButton, markAbsentButton, deleteButton, cancelButton
+      ],
+    });
+
+    await actionSheet.present();
+  }
+
+  async confirmDeleteStudent(student: Student) {
+    const deleteButton: AlertButton = {
+      text: 'Delete',
+      handler: () => this.deleteStudent(student),
+    };
+
+    const cancelButton: AlertButton = {
+      text: 'Never mind',
       role: 'cancel',
-      handler: () => {
-        console.log('Cancel clicked');
-      }
-    }]
-  });
+    };
 
-  await actionSheet.present();
-}
-
-async presentDeleteAlert(student: Student) {
-  const alert = await this.alertController.create(
-    {
+    const alert = await this.alertController.create({
       header: 'Delete this student?',
       subHeader: `${student.firstName} ${student.lastName}`,
       message: 'This operation cannot be undone.',
-      buttons: [
-        {
-          text: 'Delete',
-          handler: () => this.deleteStudent(student)
-        },
-        {
-          text: 'Never mind',
-          role: 'cancel'
-        }
-      ]
-    }
-  );
-
-  await alert.present();
-}
-
-async deleteStudent(student: Student) {
-  this.students = this.students.filter(x => x.id !== student.id);
-  const alert = await this.toastController.create(
-    {
-      message: `${student.firstName} ${student.lastName} has been deleted.`,
-      position: 'top',
-      duration: 3000
+      buttons: [deleteButton, cancelButton]
     });
 
-  await alert.present();
-}
+    await alert.present();
+  }
 
+  async deleteStudent(student: Student) {
+    await this.studentService.deleteStudent(student.id);
+
+    const alert = await this.toastController.create({
+      message: `${student.firstName} ${student.lastName} has been deleted.`,
+      position: 'top',
+      duration: 30000,
+    });
+
+    await alert.present();
+  }
+
+  resetAttendance() {
+    this.studentService.resetAttendance();
+  }
+
+  // Debugging only features
+  onSeed() {
+    this.studentService.seedData();
+  }
+
+  onClear() {
+    this.studentService.clearData();
+  }
 }
