@@ -114,8 +114,13 @@ const mockStudents: Student[] = [
 export class StudentsService {
   private students$ = new BehaviorSubject<Student[]>([]);
 
-  public init(): Promise<void> {
-    return this.pushAll();
+  public async init(): Promise<void> {
+    const students = await this.getAllStudents();
+    if (students.length === 0) {
+      await this.seedData();
+    } else {
+      await this.pushAll();
+    }
   }
 
   public allStudents(): Observable<Student[]> {

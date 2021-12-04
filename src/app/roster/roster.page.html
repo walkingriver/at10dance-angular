@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Class Roster</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/student/new']">
+      <ion-button [routerLink]="['/student-info/new']">
         <ion-icon slot="icon-only"
           name="add"></ion-icon>
       </ion-button>
@@ -41,7 +41,7 @@
               name="ellipsis-horizontal-outline">
             </ion-icon>
           </ion-button>
-          <ion-button [routerLink]="['/student', student.id]"
+          <ion-button [routerLink]="['/student-info', student.id]"
             routerDirection="forward">
             <ion-icon slot="icon-only"
               name="chevron-forward-outline"></ion-icon>
@@ -62,7 +62,7 @@
       <ion-icon name="ellipsis-vertical"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="start">
-      <ion-fab-button [routerLink]="['/student/new']">
+      <ion-fab-button [routerLink]="['/student-info/new']">
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="resetAttendance()">

@@ -5,7 +5,7 @@ import { StudentInfoPage } from './student-info.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',  // <= Change this path to add the :id
     component: StudentInfoPage,
   },
 ];

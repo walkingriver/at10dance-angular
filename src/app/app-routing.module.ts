@@ -13,7 +13,7 @@ const routes: Routes = [
       import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
-    path: 'student/:id',
+    path: 'student-info',
     loadChildren: () =>
       import('./student-info/student-info.module').then(
         (m) => m.StudentInfoPageModule
