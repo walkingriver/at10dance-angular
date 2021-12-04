@@ -1,5 +1,6 @@
 <ion-header>
   <ion-toolbar>
+    // Place this as the first element in the ion-toolbar
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -35,6 +36,7 @@
           slot="end"
           name="eye-off-outline"></ion-icon>
 
+        // This should be the last element inside the ion-item
         <ion-buttons slot="end">
           <ion-button (click)="presentActionSheet(student)">
             <ion-icon slot="icon-only"
@@ -48,6 +50,7 @@
           </ion-button>
         </ion-buttons>
       </ion-item>
+      // This element comes right after the ion-item
       <ion-item-options side="end">
         <ion-item-option color="danger"
           (click)="confirmDeleteStudent(student)">Delete</ion-item-option>
@@ -55,6 +58,8 @@
     </ion-item-sliding>
   </ion-list>
 
+  // This element comes after the ion-list
+  // and the last element inside the ion-content
   <ion-fab vertical="bottom"
     horizontal="end"
     slot="fixed">
