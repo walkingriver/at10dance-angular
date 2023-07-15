@@ -90,18 +90,16 @@ Next, I committed the changes. Angular will not update on an unclean working rep
 git commit -am "Updated to latest Angular 12"
 ```
 
-```markdown
-put command output here
-```
+You can compare what changed by reviewing the diff on GitHub. Not much happened because it was such a minor upgrade. The Angular schematics didn't detect any code changes required, which will not always be the case, as I'm sure we'll see.
 
-You can compare what changed by reviewing the diff on GitHub. Again, not much happened.
+At this point, and after each upgrade, it is a good idea to test your application to ensure everything is working as expected. If you have automated tests, this step will be much easier.
 
 ## Angular 12 to Angular 13
 
 Next, I upgraded the project to Angular 13 with the following command:
 
 ```bash
-npx ng update @angular/cli@13 @angular/core@13
+ng update @angular/cli@13 @angular/core@13
 ```
 
 ```markdown
