@@ -30,6 +30,4 @@ npm-debug.log*
 /plugins
 /www
 
-# Temporary - remove this eventually
-docs/angular-updates.md
 .angular
