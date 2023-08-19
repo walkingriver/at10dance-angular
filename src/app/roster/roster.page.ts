@@ -1,19 +1,23 @@
 import { Component } from '@angular/core';
-import {
-  ActionSheetButton,
-  ActionSheetController,
-  AlertButton,
-  AlertController,
-  ToastController,
-} from '@ionic/angular';
+import { ActionSheetButton, ActionSheetController, AlertButton, AlertController, ToastController, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Student } from '../student';
 import { StudentsService } from '../students.service';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-roster',
-  templateUrl: './roster.page.html',
-  styleUrls: ['./roster.page.scss'],
+    selector: 'app-roster',
+    templateUrl: './roster.page.html',
+    styleUrls: ['./roster.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        RouterLink,
+        NgFor,
+        NgIf,
+        AsyncPipe,
+    ],
 })
 export class RosterPage {
   students$: Observable<Student[]>;

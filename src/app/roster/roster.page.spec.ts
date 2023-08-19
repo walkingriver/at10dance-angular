@@ -10,9 +10,8 @@ describe('RosterPage', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
-        declarations: [RosterPage],
-        imports: [IonicModule.forRoot()],
-      }).compileComponents();
+    imports: [IonicModule.forRoot(), RosterPage],
+}).compileComponents();
 
       fixture = TestBed.createComponent(RosterPage);
       component = fixture.componentInstance;

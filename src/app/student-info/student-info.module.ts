@@ -9,12 +9,12 @@ import { StudentInfoPageRoutingModule } from './student-info-routing.module';
 import { StudentInfoPage } from './student-info.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    StudentInfoPageRoutingModule,
-  ],
-  declarations: [StudentInfoPage],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        StudentInfoPageRoutingModule,
+        StudentInfoPage,
+    ],
 })
 export class StudentInfoPageModule {}
