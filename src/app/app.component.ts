@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { StudentsService } from './students.service';
+import { EnvironmentInjector } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  constructor(private platform: Platform, private students: StudentsService) {
+  constructor(public environmentInjector: EnvironmentInjector, private platform: Platform, private students: StudentsService) {
     this.initializeApp();
   }
 
