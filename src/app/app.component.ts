@@ -1,12 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Platform, IonicModule } from '@ionic/angular';
 import { StudentsService } from './students.service';
 import { EnvironmentInjector } from '@angular/core';
+import { RouterLinkActive, RouterLink } from '@angular/router';
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        RouterLinkActive,
+        RouterLink,
+    ],
 })
 export class AppComponent implements OnInit {
   public appPages = [

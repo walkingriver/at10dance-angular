@@ -17,12 +17,11 @@ describe('AppComponent', () => {
       });
 
       TestBed.configureTestingModule({
-    declarations: [AppComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
         { provide: Platform, useValue: platformSpy },
     ],
-    imports: [RouterTestingModule.withRoutes([])],
+    imports: [RouterTestingModule.withRoutes([]), AppComponent],
 }).compileComponents();
     })
   );
