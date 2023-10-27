@@ -9,28 +9,28 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () =>
-      import('./home/home.module').then((m) => m.HomePageModule),
+    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
   {
     path: 'student-info',
-    loadChildren: () =>
-      import('./student-info/student-info.module').then(
-        (m) => m.StudentInfoPageModule
-      ),
+    children: [
+      {
+        path: ':id',
+        loadComponent: () => import('./student-info/student-info.page').then((m) => m.StudentInfoPage),
+      }
+    ]
   },
-{
-  path: 'roster',
-  loadChildren: () =>
-    import('./roster/roster.module').then((m) => m.RosterPageModule),
-},
+  {
+    path: 'roster',
+    loadComponent: () => import('./roster/roster.page').then((m) => m.RosterPage),
+  },
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-    preloadingStrategy: PreloadAllModules
-}),
+      preloadingStrategy: PreloadAllModules
+    }),
   ],
   exports: [RouterModule],
 })

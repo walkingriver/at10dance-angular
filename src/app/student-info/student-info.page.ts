@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { Platform, IonicModule } from '@ionic/angular';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { StudentsService } from '../students.service';
 
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Student } from '../student';
+import { FormsModule } from '@angular/forms';
+import { NgIf, AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-student-info',
-  templateUrl: './student-info.page.html',
-  styleUrls: ['./student-info.page.scss'],
+    selector: 'app-student-info',
+    templateUrl: './student-info.page.html',
+    styleUrls: ['./student-info.page.scss'],
+    standalone: true,
+    imports: [
+        NgIf,
+        IonicModule,
+        FormsModule,
+        AsyncPipe,
+        JsonPipe,
+    ],
 })
 export class StudentInfoPage implements OnInit {
   emailPattern =
