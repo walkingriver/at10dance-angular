@@ -13,12 +13,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^16.2.12",
-    "@angular/core": "^16.2.12",
-    "@angular/forms": "^16.2.12",
-    "@angular/platform-browser": "^16.2.12",
-    "@angular/platform-browser-dynamic": "^16.2.12",
-    "@angular/router": "^16.2.12",
+    "@angular/common": "^17.3.12",
+    "@angular/core": "^17.3.12",
+    "@angular/forms": "^17.3.12",
+    "@angular/platform-browser": "^17.3.12",
+    "@angular/platform-browser-dynamic": "^17.3.12",
+    "@angular/router": "^17.3.12",
     "@capacitor/app": "^1.0.5",
     "@capacitor/camera": "^1.2.0",
     "@capacitor/core": "3.2.5",
@@ -32,14 +32,14 @@
     "rxjs": "~7.4.0",
     "tslib": "^1.9.0",
     "uuid": "^8.3.2",
-    "zone.js": "~0.13.1"
+    "zone.js": "~0.14.10"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.14",
-    "@angular/cli": "^16.2.14",
-    "@angular/compiler": "^16.2.12",
-    "@angular/compiler-cli": "^16.2.12",
-    "@angular/language-service": "^16.2.12",
+    "@angular-devkit/build-angular": "^17.3.8",
+    "@angular/cli": "^17.3.8",
+    "@angular/compiler": "^17.3.12",
+    "@angular/compiler-cli": "^17.3.12",
+    "@angular/language-service": "^17.3.12",
     "@ionic/angular-toolkit": "^2.1.1",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
@@ -56,7 +56,7 @@
     "prettier-plugin-organize-attributes": "0.0.4",
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
-    "typescript": "~4.9.5"
+    "typescript": "~5.4.5"
   },
   "description": "An Ionic project"
 }
