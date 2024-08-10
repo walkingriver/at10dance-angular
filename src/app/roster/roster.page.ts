@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActionSheetButton, ActionSheetController, AlertButton, AlertController, ToastController, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Student } from '../student';
@@ -7,60 +7,54 @@ import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
-    selector: 'app-roster',
-    templateUrl: './roster.page.html',
-    styleUrls: ['./roster.page.scss'],
-    standalone: true,
-    imports: [
-    IonicModule,
-    RouterLink,
-    AsyncPipe
-],
+  selector: 'app-roster',
+  templateUrl: './roster.page.html',
+  styleUrls: ['./roster.page.scss'],
+  standalone: true,
+  imports: [IonicModule, RouterLink, AsyncPipe],
 })
 export class RosterPage {
-  students$: Observable<Student[]>;
+  private actionSheetController = inject( ActionSheetController);
+  private alertController = inject( AlertController);
+  private studentService = inject( StudentsService);
+  private toastController = inject( ToastController);
 
-  constructor(
-    private actionSheetController: ActionSheetController,
-    private alertController: AlertController,
-    private studentService: StudentsService,
-    private toastController: ToastController
-  ) {
-    this.students$ = this.studentService.allStudents();
-  }
-
+  students$: Observable<Student[]> = this.studentService.allStudents();
 
   async presentActionSheet(student: Student) {
     const markPresentButton: ActionSheetButton = {
       text: 'Mark Present',
       icon: 'eye',
-      handler: () => this.studentService.markPresent(student)
+      handler: () => this.studentService.markPresent(student),
     };
 
     const markAbsentButton: ActionSheetButton = {
       text: 'Mark Absent',
       role: 'selected',
       icon: 'eye-off-outline',
-      handler: () => this.studentService.markAbsent(student)
+      handler: () => this.studentService.markAbsent(student),
     };
 
     const deleteButton: ActionSheetButton = {
       text: 'Delete',
       icon: 'trash',
       role: 'destructive',
-      handler: () => this.confirmDeleteStudent(student)
+      handler: () => this.confirmDeleteStudent(student),
     };
 
     const cancelButton: ActionSheetButton = {
       text: 'Cancel',
       icon: 'close',
-      role: 'cancel'
+      role: 'cancel',
     };
 
     const actionSheet = await this.actionSheetController.create({
       header: `${student.firstName} ${student.lastName}`,
       buttons: [
-        markPresentButton, markAbsentButton, deleteButton, cancelButton
+        markPresentButton,
+        markAbsentButton,
+        deleteButton,
+        cancelButton,
       ],
     });
 
@@ -82,7 +76,7 @@ export class RosterPage {
       header: 'Delete this student?',
       subHeader: `${student.firstName} ${student.lastName}`,
       message: 'This operation cannot be undone.',
-      buttons: [deleteButton, cancelButton]
+      buttons: [deleteButton, cancelButton],
     });
 
     await alert.present();

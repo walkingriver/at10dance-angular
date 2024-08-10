@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Platform, IonicModule } from '@ionic/angular';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -22,6 +22,12 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
 ],
 })
 export class StudentInfoPage implements OnInit {
+  // Always inject your services at the top of the class
+  private route = inject(ActivatedRoute);
+  private platform = inject(Platform);
+  private router = inject(Router);
+  private studentService = inject(StudentsService);
+
   emailPattern =
     /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
@@ -37,13 +43,6 @@ export class StudentInfoPage implements OnInit {
   studentVm$ = this.student$.pipe(map(this.cloneStudent));
 
   isMobile = false;
-
-  constructor(
-    private route: ActivatedRoute,
-    private platform: Platform,
-    private router: Router,
-    private studentService: StudentsService
-  ) {}
 
   async ngOnInit() {
     await this.platform.ready();
@@ -71,7 +70,7 @@ export class StudentInfoPage implements OnInit {
     // You can access the original file using image.path, which can be
     // passed to the Filesystem API to read the raw data of the image,
     // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-    var imageUrl = image.dataUrl;
+    let imageUrl = image.dataUrl;
 
     // Can be set to the src of an image now
     console.log(imageUrl);
