@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [
+export const appRoutes: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -25,13 +24,3 @@ const routes: Routes = [
     loadComponent: () => import('./roster/roster.page').then((m) => m.RosterPage),
   },
 ];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, {
-      preloadingStrategy: PreloadAllModules
-    }),
-  ],
-  exports: [RouterModule],
-})
-export class AppRoutingModule { }

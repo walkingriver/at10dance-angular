@@ -1,15 +1,14 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 
 import { environment } from './environments/environment';
 
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { AppComponent } from './app/app.component';
-import { AppRoutingModule } from './app/app-routing.module';
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 import { IonicRouteStrategy, IonicModule } from '@ionic/angular';
-import { RouteReuseStrategy } from '@angular/router';
+import { provideRouter, RouteReuseStrategy } from '@angular/router';
+import { appRoutes } from 'src/app/app-routes';
 
 if (environment.production) {
   enableProdMode();
@@ -17,7 +16,8 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(BrowserModule, IonicModule.forRoot(), AppRoutingModule),
+      provideRouter(appRoutes),
+        importProvidersFrom(BrowserModule, IonicModule.forRoot()),
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ]
 })
