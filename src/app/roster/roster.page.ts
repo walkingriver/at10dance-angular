@@ -3,7 +3,7 @@ import { ActionSheetButton, ActionSheetController, AlertButton, AlertController,
 import { Observable } from 'rxjs';
 import { Student } from '../student';
 import { StudentsService } from '../students.service';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -12,12 +12,10 @@ import { RouterLink } from '@angular/router';
     styleUrls: ['./roster.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        RouterLink,
-        NgFor,
-        NgIf,
-        AsyncPipe,
-    ],
+    IonicModule,
+    RouterLink,
+    AsyncPipe
+],
 })
 export class RosterPage {
   students$: Observable<Student[]>;

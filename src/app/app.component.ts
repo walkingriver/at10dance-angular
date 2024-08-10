@@ -3,7 +3,7 @@ import { Platform, IonicModule } from '@ionic/angular';
 import { StudentsService } from './students.service';
 import { EnvironmentInjector } from '@angular/core';
 import { RouterLinkActive, RouterLink } from '@angular/router';
-import { NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'app-root',
@@ -11,11 +11,10 @@ import { NgFor } from '@angular/common';
     styleUrls: ['app.component.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgFor,
-        RouterLinkActive,
-        RouterLink,
-    ],
+    IonicModule,
+    RouterLinkActive,
+    RouterLink
+],
 })
 export class AppComponent implements OnInit {
   public appPages = [

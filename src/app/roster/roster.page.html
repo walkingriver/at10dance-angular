@@ -21,66 +21,69 @@
 
 <ion-content>
   <ion-list>
-    <ion-item-sliding *ngFor="let student of students$ | async">
-      <ion-item>
-        <ion-icon slot="start" name="person-outline"> </ion-icon>
-        <ion-label>{{student.lastName}}, {{student.firstName}} </ion-label>
-        <ion-icon
-          *ngIf="student.status==='present'"
-          slot="end"
-          name="eye"
-        ></ion-icon>
-        <ion-icon
-          *ngIf="student.status==='absent'"
-          slot="end"
-          name="eye-off-outline"
-        ></ion-icon>
-
-        <!-- This should be the last element inside the ion-item -->
-        <ion-buttons slot="end">
-          <ion-button (click)="presentActionSheet(student)">
-            <ion-icon slot="icon-only" name="ellipsis-horizontal-outline">
-            </ion-icon>
-          </ion-button>
-          <ion-button
-            [routerLink]="['/student-info', student.id]"
-            routerDirection="forward"
-          >
+    @for (student of students$ | async; track student) {
+      <ion-item-sliding>
+        <ion-item>
+          <ion-icon slot="start" name="person-outline"> </ion-icon>
+          <ion-label>{{student.lastName}}, {{student.firstName}} </ion-label>
+          @if (student.status==='present') {
             <ion-icon
-              slot="icon-only"
-              name="chevron-forward-outline"
+              slot="end"
+              name="eye"
             ></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-item>
-      <!-- This element comes right after the ion-item -->
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="confirmDeleteStudent(student)"
-          >Delete</ion-item-option
-        >
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+          }
+          @if (student.status==='absent') {
+            <ion-icon
+              slot="end"
+              name="eye-off-outline"
+            ></ion-icon>
+          }
+          <!-- This should be the last element inside the ion-item -->
+          <ion-buttons slot="end">
+            <ion-button (click)="presentActionSheet(student)">
+              <ion-icon slot="icon-only" name="ellipsis-horizontal-outline">
+              </ion-icon>
+            </ion-button>
+            <ion-button
+              [routerLink]="['/student-info', student.id]"
+              routerDirection="forward"
+              >
+              <ion-icon
+                slot="icon-only"
+                name="chevron-forward-outline"
+              ></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+        <!-- This element comes right after the ion-item -->
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="confirmDeleteStudent(student)"
+            >Delete</ion-item-option
+            >
+          </ion-item-options>
+        </ion-item-sliding>
+      }
+    </ion-list>
 
-  <!-- This element comes after the ion-list and the last element inside the 
-  ion-content -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="ellipsis-vertical"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="start">
-      <ion-fab-button [routerLink]="['/student-info/new']">
-        <ion-icon name="add"></ion-icon>
+    <!-- This element comes after the ion-list and the last element inside the
+    ion-content -->
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button>
+        <ion-icon name="ellipsis-vertical"></ion-icon>
       </ion-fab-button>
-      <ion-fab-button (click)="resetAttendance()">
-        <ion-icon name="refresh"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="onClear()">
-        <ion-icon name="close-circle-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button (click)="onSeed()">
-        <ion-icon name="egg"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-</ion-content>
+      <ion-fab-list side="start">
+        <ion-fab-button [routerLink]="['/student-info/new']">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="resetAttendance()">
+          <ion-icon name="refresh"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="onClear()">
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="onSeed()">
+          <ion-icon name="egg"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+  </ion-content>

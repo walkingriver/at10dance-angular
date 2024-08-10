@@ -7,7 +7,7 @@ import { StudentsService } from '../students.service';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Student } from '../student';
 import { FormsModule } from '@angular/forms';
-import { NgIf, AsyncPipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'app-student-info',
@@ -15,12 +15,11 @@ import { NgIf, AsyncPipe, JsonPipe } from '@angular/common';
     styleUrls: ['./student-info.page.scss'],
     standalone: true,
     imports: [
-        NgIf,
-        IonicModule,
-        FormsModule,
-        AsyncPipe,
-        JsonPipe,
-    ],
+    IonicModule,
+    FormsModule,
+    AsyncPipe,
+    JsonPipe
+],
 })
 export class StudentInfoPage implements OnInit {
   emailPattern =

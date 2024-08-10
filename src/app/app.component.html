@@ -8,18 +8,20 @@
       </ion-header>
       <ion-content>
         <ion-list>
-          <ion-menu-toggle *ngFor="let page of appPages" auto-hide="false">
-            <ion-item
-              [routerLink]="[page.url]"
-              routerDirection="root"
-              lines="none"
-              detail="false"
-              routerLinkActive="selected"
-            >
-              <ion-icon [name]="page.icon" slot="start"></ion-icon>
-              <ion-label>{{ page.title }}</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+          @for (page of appPages; track page) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item
+                [routerLink]="[page.url]"
+                routerDirection="root"
+                lines="none"
+                detail="false"
+                routerLinkActive="selected"
+                >
+                <ion-icon [name]="page.icon" slot="start"></ion-icon>
+                <ion-label>{{ page.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          }
         </ion-list>
       </ion-content>
     </ion-menu>
